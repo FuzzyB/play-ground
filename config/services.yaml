@@ -29,3 +29,14 @@ services:
         tags: ['controller.service_arguments']
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    _instanceof:
+        App\Recommendations\RecommendationStrategyInterface:
+            tags: [ 'recommendation_strategy' ]
+    
+    App\Recommendations\RecommendationService:
+        arguments:
+            - !tagged_iterator { 
+                tag: 'recommendation_strategy', 
+                default_index_method: 'getRecommendationType' 
+            }
